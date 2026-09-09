@@ -33,6 +33,44 @@
 
     <link rel='stylesheet' type='text/css' media='screen' href='vista/css/main.css'>
    
+<header class="glass-panel sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between border-b border-white/5">
+    <div class="flex items-center gap-3">
+        <a href="index.php?ruta=calendario" class="flex items-center gap-2.5">
+            <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <i class="fa-solid fa-layer-group text-white text-sm"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-white text-base leading-none">Work<span class="text-cyan-400">Shift</span></h1>
+                <span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Campus & Remote</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- Menú central de navegación -->
+    <nav class="flex items-center gap-1 sm:gap-2">
+        <a href="index.php?ruta=calendario" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition <?= ($_GET['ruta'] ?? 'calendario') === 'calendario' ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white' ?>">
+            <i class="fa-regular fa-calendar mr-1"></i> <span class="hidden sm:inline">Mi Calendario</span>
+        </a>
+        <a href="index.php?ruta=equipo" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition <?= ($_GET['ruta'] ?? '') === 'equipo' ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white' ?>">
+            <i class="fa-solid fa-users mr-1"></i> <span class="hidden sm:inline">Compañeros</span>
+        </a>
+        <a href="index.php?ruta=ajustes" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition <?= ($_GET['ruta'] ?? '') === 'ajustes' ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white' ?>">
+            <i class="fa-solid fa-sliders mr-1"></i> <span class="hidden sm:inline">Ajustes</span>
+        </a>
+    </nav>
+
+    <!-- Perfil y Salida -->
+    <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden md:flex flex-col text-right">
+            <span class="text-xs font-bold text-slate-200"><?= htmlspecialchars($_SESSION["nombre"]) ?></span>
+            <span class="text-[11px] text-cyan-400">@<?= htmlspecialchars($_SESSION["username"]) ?></span>
+        </div>
+        <a href="index.php?ruta=salir" class="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 flex items-center justify-center transition text-xs" title="Cerrar Sesión">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
+    </div>
+</header>
+
 
 </head>
 <body>

@@ -1,7 +1,6 @@
 <?php
-
-class PlantillaControlador{
-    public function crtPlantilla(){
+class PlantillaControlador {
+    public function ctrTraerPlantilla() {
         include "vista/plantilla.php";
     }
 }

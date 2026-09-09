@@ -6,7 +6,7 @@ class conexion{
         $usuariosServidor = "root";
 
         // nombre del a base de datos
-        $baseDatos = "";
+        $baseDatos = "workshift";
 
         $password = "";
 
