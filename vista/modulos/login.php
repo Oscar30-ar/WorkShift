@@ -1,11 +1,22 @@
 <?php
-// URI de redirección dinámica según el entorno (Localhost o InfinityFree)
+// Configuración Google OAuth 2.0 Universal (Compatible al 100% con iOS / Safari)
+$googleClientId = "507765840362-srte8jua5329bto4rh777cnj2ddhcbsa.apps.googleusercontent.com";
 $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-$uriRedirect = $protocolo . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI"], '?') . "?action=login_google_redirect";
-?>
+$rutaBase = strtok($_SERVER["REQUEST_URI"], '?');
+if (substr($rutaBase, -9) !== 'index.php') {
+    $rutaBase = rtrim($rutaBase, '/') . '/index.php';
+}
+$redirectUri = $protocolo . $_SERVER['HTTP_HOST'] . $rutaBase . "?action=google_oauth_callback";
 
-<!-- SDK Oficial de Google Identity Services -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+$googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
+    'client_id' => $googleClientId,
+    'redirect_uri' => $redirectUri,
+    'response_type' => 'code',
+    'scope' => 'openid email profile',
+    'access_type' => 'online',
+    'prompt' => 'select_account'
+]);
+?>
 
 <div class="flex-1 w-full flex items-center justify-center p-4 py-8">
     <div class="glass-panel w-full max-w-sm sm:max-w-md rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
@@ -15,42 +26,21 @@ $uriRedirect = $protocolo . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI
             <div class="inline-flex h-14 w-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-cyan-400 items-center justify-center shadow-xl shadow-indigo-500/30 mb-3">
                 <i class="fa-solid fa-calendar-check text-2xl text-white"></i>
             </div>
-            <h2 class="text-2xl font-bold tracking-tight text-white">Bienvenido de nuevo</h2>
-            <p class="text-xs text-slate-400 mt-1">Gestiona tus asistencias a Campus y Casa</p>
+            <h2 class="text-2xl font-bold tracking-tight text-white">Bienvenido a WorkShift</h2>
+            <p class="text-xs text-slate-400 mt-1">Gestión corporativa de campus y trabajo remoto</p>
         </div>
 
-        <!-- Contenedor del Botón de Google Personalizado -->
-        <div class="relative w-full overflow-hidden rounded-xl">
-            <!-- 1. Tu Botón Personalizado con Glassmorphism -->
-            <button type="button" 
-                    class="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-white/10 bg-slate-900/60 text-slate-200 font-medium text-xs sm:text-sm shadow-sm pointer-events-none">
-                <svg class="h-4 w-4" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span>Continuar con Google</span>
-            </button>
-
-            <!-- 2. Inicializador de Google en modo Redirect (Compatible con iOS) -->
-            <div id="g_id_onload"
-                 data-client_id="507765840362-srte8jua5329bto4rh777cnj2ddhcbsa.apps.googleusercontent.com"
-                 data-login_uri="<?= $uriRedirect ?>"
-                 data-auto_prompt="false"
-                 data-ux_mode="redirect">
-            </div>
-
-            <!-- 3. Botón Oficial Invisible encima (Captura el toque exacto en iOS/Safari sin bloqueo) -->
-            <div class="g_id_signin absolute inset-0 opacity-[0.001] cursor-pointer flex items-center justify-center scale-[1.3]"
-                 data-type="standard"
-                 data-shape="rectangular"
-                 data-theme="outline"
-                 data-text="signin_with"
-                 data-size="large"
-                 data-width="400">
-            </div>
-        </div>
+        <!-- Botón Nativo con Diseño Glassmorphism (A prueba de balas en Safari iOS) -->
+        <a href="<?= htmlspecialchars($googleAuthUrl) ?>" 
+           class="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-white/10 bg-slate-900/60 hover:bg-white/5 hover:border-white/20 text-slate-200 hover:text-white font-medium text-xs sm:text-sm transition duration-200 shadow-sm active:scale-[0.99]">
+            <svg class="h-4 w-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continuar con Google</span>
+        </a>
 
         <!-- Aviso legal y enlace funcional -->
         <p class="text-[10px] text-slate-400 text-center mt-2.5 max-w-xs mx-auto leading-relaxed">
@@ -63,7 +53,7 @@ $uriRedirect = $protocolo . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI
         <!-- Separador -->
         <div class="relative flex py-3 items-center">
             <div class="flex-grow border-t border-white/10"></div>
-            <span class="flex-shrink mx-3 text-[10px] text-slate-400 uppercase tracking-widest font-semibold">o con contraseña</span>
+            <span class="flex-shrink mx-3 text-[10px] text-slate-400 uppercase tracking-widest font-semibold">o con credenciales</span>
             <div class="flex-grow border-t border-white/10"></div>
         </div>
 
@@ -110,8 +100,7 @@ $uriRedirect = $protocolo . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI
             <div class="mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs text-center">
                 <?php 
                     if ($_GET["error"] === "google_rechazado") echo "No fue posible validar tu cuenta con Google.";
-                    elseif ($_GET["error"] === "token_vacio") echo "No se recibió información de autenticación.";
-                    else echo "Ocurrió un error al iniciar sesión.";
+                    else echo "Ocurrió un error al procesar el inicio de sesión.";
                 ?>
             </div>
         <?php endif; ?>
@@ -136,10 +125,9 @@ $uriRedirect = $protocolo . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI
             </div>
             
             <div class="text-xs text-slate-300 space-y-3 overflow-y-auto max-h-[50vh] pr-2 mt-4 text-justify leading-relaxed">
-                <p><strong>1. Finalidad del Tratamiento:</strong> Los datos suministrados (nombre, correo electrónico y registros de modalidad laboral) son recolectados y procesados exclusivamente para la organización y seguimiento de jornadas presenciales en campus y de trabajo en casa en la plataforma WorkShift.</p>
-                <p><strong>2. Autenticación con Google:</strong> Al iniciar sesión con Google, únicamente recibimos tu nombre y correo validado con el fin de crear o sincronizar tu perfil de forma rápida y segura.</p>
-                <p><strong>3. Privacidad entre Compañeros:</strong> Tu ubicación o modalidad diaria únicamente será visible para aquellos compañeros de trabajo registrados a quienes decidas permitir visibilidad.</p>
-                <p><strong>4. Derechos del Titular:</strong> Puedes actualizar tu información, cambiar tus preferencias de visibilidad o desvincular tus datos en cualquier momento desde el panel de Ajustes.</p>
+                <p><strong>1. Finalidad:</strong> Organización y seguimiento de jornadas presenciales en campus y de trabajo en casa en WorkShift.</p>
+                <p><strong>2. Autenticación con Google:</strong> Recibimos únicamente tu correo corporativo o personal y tu nombre para crear y sincronizar tu sesión de forma segura.</p>
+                <p><strong>3. Privacidad y Niveles de Supervisión:</strong> Tu información es visible según tu jerarquía y área laboral, así como para aquellos compañeros que sigues mutuamente.</p>
             </div>
         </div>
 
@@ -152,11 +140,6 @@ $uriRedirect = $protocolo . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI
 </div>
 
 <script>
-function abrirModalTerminos() {
-    document.getElementById('modalTerminosLogin').classList.remove('hidden');
-}
-
-function cerrarModalTerminos() {
-    document.getElementById('modalTerminosLogin').classList.add('hidden');
-}
+function abrirModalTerminos() { document.getElementById('modalTerminosLogin').classList.remove('hidden'); }
+function cerrarModalTerminos() { document.getElementById('modalTerminosLogin').classList.add('hidden'); }
 </script>

@@ -1,5 +1,5 @@
 <script src='vista/js/main.js'></script>
-
+<script src="vista/js/reporte_pdf.js?v=1.0"></script>
 <footer class="w-full mt-auto border-t border-white/5 bg-slate-950/60 backdrop-blur-md py-4 px-4">
     <div class="w-full max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
         <!-- Logo y subtítulo -->

@@ -1,4 +1,10 @@
 <?php
+require_once "modelo/conexion.php";
+require_once "modelo/usuarioModelo.php";
+require_once "modelo/turnoModelo.php";
+require_once "modelo/correoServicio.php";
+require_once "controlador/plantillaControlador.php";
+require_once "controlador/usuariosControlador.php";
 class CorreoServicio {
     public static function enviarCodigoRecuperacion($destinatario, $codigo) {
         $usuarioGmail = "oxcarbohorfo13@gmail.com";        // Tu cuenta de Google

@@ -1,0 +1,199 @@
+/* =========================================================================
+   WORKSHIFT - COMPLIANCE BANCARIO (PRINT FIX)
+========================================================================= */
+
+@page {
+    size: A4 portrait;
+    margin: 10mm 12mm !important; /* Margen oficial de hoja A4 */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #0f172a;
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 10px;
+    line-height: 1.35;
+    width: 100% !important;
+}
+
+.contenedor-documento {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Encabezado sin desbordes */
+.header-reporte {
+    border-bottom: 2px solid #0284c7;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.logo-banco {
+    font-size: 16px;
+    font-weight: 900;
+    color: #0284c7;
+    letter-spacing: -0.5px;
+}
+
+.subtitulo-banco {
+    font-size: 8px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Ficha del colaborador (4 columnas que no se desbordan) */
+.grid-info {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    margin-bottom: 12px !important;
+    width: 100% !important;
+}
+
+.info-item label {
+    display: block;
+    font-size: 7.5px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.info-item strong {
+    font-size: 10.5px;
+    color: #0f172a;
+    word-break: break-word;
+}
+
+/* Tarjetas de Métricas (4 tarjetas proporcionales) */
+.grid-kpis {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+    width: 100% !important;
+}
+
+.kpi-card {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 8px 4px !important;
+    text-align: center;
+    background: #ffffff !important;
+}
+
+.kpi-card p {
+    margin: 0;
+    font-size: 7.5px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.kpi-card h3 {
+    margin: 3px 0 0 0;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* Tabla de Asistencias */
+table.tabla-datos {
+    width: 100% !important;
+    table-layout: fixed; /* Evita que las columnas empujen hacia la derecha */
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 9px;
+}
+
+table.tabla-datos th {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 8px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+table.tabla-datos td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    word-break: break-word;
+}
+
+/* Badges */
+.badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 7.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-campus { background: #e0f2fe; color: #0369a1; }
+.badge-casa { background: #e0e7ff; color: #4338ca; }
+.badge-festivo { background: #fef3c7; color: #b45309; }
+.badge-incapacidad { background: #fee2e2; color: #b91c1c; }
+.badge-permiso { background: #f3e8ff; color: #7e22ce; }
+
+/* Firmas */
+.footer-firmas {
+    margin-top: 28px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+    page-break-inside: avoid;
+    width: 100% !important;
+}
+
+.linea-firma {
+    border-top: 1px solid #94a3b8;
+    padding-top: 5px;
+    text-align: center;
+    font-size: 8.5px;
+    color: #64748b;
+}
+
+.linea-firma strong {
+    color: #0f172a;
+    font-size: 9.5px;
+}
+
+.aviso-legal {
+    margin-top: 18px;
+    padding-top: 6px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 7.5px;
+    color: #94a3b8;
+    text-align: justify;
+}
+
+@media print {
+    .top-actions {
+        display: none !important;
+    }
+}
